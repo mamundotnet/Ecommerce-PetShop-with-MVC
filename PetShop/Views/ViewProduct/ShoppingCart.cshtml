@@ -1,0 +1,65 @@
+﻿@model IEnumerable<PetShop.Models.InputModels.ShoppingCartModel>
+
+@{
+    ViewBag.Title = "ShoppingCart";
+    double TotalAmount = 0.00;
+}
+
+
+<div class="container" style="margin-top:75px;">
+    <h2 class="text-center mb-4">Shopping Cart List</h2>
+
+    @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "msg", OnComplete = "orderAll" }))
+    {
+        <table class="table table-light">
+            @foreach (var cart in Model)
+            {
+                TotalAmount += cart.Total;
+                <tr>
+                    <td>
+                        <img src="@Url.Content(cart.ImagePath)" width="80" height="50" class="img-fluid" />
+                    </td>
+                    <td>
+                        @cart.ProductsName
+                    </td>
+                    <td>@cart.Quantity</td>
+                    <td>@cart.UnitPrice.ToString("#,##0.00")</td>
+                    <td>@cart.Total.ToString("#,##0.00")</td>
+                </tr>
+            }
+            <tr style="border-top:2px solid #b62626">
+                <td colspan="4" style="text-align:right;" class="text-primary">
+                    <h5>Total Amount</h5>
+                </td>
+                <td>
+                    <h5>@TotalAmount.ToString("#,##0.00")</h5>
+                </td>
+            </tr>
+
+        </table>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success btn-sm m-1">Order Now</button>
+            <a href="@Url.Action("Index","ViewProduct")" class="btn btn-sm m-1 btn-link">Back to Add Cart</a>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-10 offset-2" id="msg">
+
+            </div>
+        </div>
+    }
+</div>
+@section scripts{
+
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <script>
+        function orderAll() {
+            $("#form0").trigger("reset");
+        }
+    </script>
+
+}

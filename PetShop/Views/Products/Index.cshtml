@@ -1,0 +1,124 @@
+﻿@model IEnumerable<PetShop.Models.ViewModels.RetriveProductView>
+@{
+    ViewBag.Title = "Index";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-top:53px;">
+    <div class="container">
+        <a href="@Url.Action("Index","Home")" class="nav-link">
+            <img src="~/Images/Logo.png" width="40" height="40" class="me-1 navbar-brand" />
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menubar" aria-controls="menubar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menubar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    @Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Categories", "Index", "Categories", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Sub Category", "Index", "SubCategories", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Brand", "Index", "Brands", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Orders", "Orders", "Products", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("OrderDetails", "OrderDetails", "Products", new { area = "" }, new { @class = "nav-link" })
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container mt-3">
+    <h1 class="text-center text-decoration-underline">Products Details</h1>
+    <div class="d-flex justify-content-start mb-2">
+        <a href="@Url.Action("Create","Products")" class="btn btn-info">Add New</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+
+        @foreach (var p in Model)
+        {
+            <div class="col-md-4 col-xs-6 border-primary mb-3">
+                <div class="card mb-4" style="max-width:540px;">
+                    <div class="row g-0">
+
+                        <div class="col-md-12">
+                            <div class="card-header text-white" style="background-color:#156c78">
+                                <p class="card-text">
+                                    <h5 class="card-title text-center">@Html.DisplayFor(x => p.BrandName)</h5>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <img src="@Url.Content(p.Images)" width="200" height="200" alt="" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <p class="card-text"><b>Name: </b>@Html.DisplayFor(x => p.ProductsName)</p>
+                                <p class="card-text"><b>Category: </b>@Html.DisplayFor(x => p.CategoryName)</p>
+                                <p class="card-text"><b>Quantity: </b>@Html.DisplayFor(x => p.QuantityInStock)</p>
+                                <p class="card-text"><b>Unit: </b>@Html.DisplayFor(x => p.QuantityPerUnit)</p>
+                                <p class="card-text"><b>Price: </b>TK-@Html.DisplayFor(x => p.UnitPrice)</p>
+                                <p class="card-text">
+                                    <b>Status: </b>
+                                    @if (p.QuantityInStock != 0)
+                                    {
+                                        <span class="badge bg-success text-white fw-bold">Available</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger text-white fw-bold">Not Available</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <b>Product Description: </b><br>
+                                    @Html.DisplayFor(x => p.Description)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-footer" style="background-color:#156c78">
+                                <p class="card-text">
+
+                                    <a href="@Url.Action("Delete","Products",new { id=p.ProductsId})" class="btn btn-sm float-right" style="background-color:#ff0000">Delete</a>
+                                    <a href="@Url.Action("Edit","Products",new { id=p.ProductsId})" class="btn btn-sm float-right text-white" style="background-color:#808080;margin-right:2px; margin-left:2px;">Edit</a>
+                                    <a href="@Url.Action("ViewProduct","ViewProduct",new { id=p.ProductsId})" class="btn btn-sm float-right text-white" style="background-color:#a42929">View</a>
+                                    <a href="@Url.Action("Index","Home")" class="btn btn-success text-white btn-sm">Go to Home</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+
+
+

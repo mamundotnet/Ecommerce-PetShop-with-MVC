@@ -1,0 +1,96 @@
+﻿@model PagedList.IPagedList<PetShop.Models.InputModels.Category>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-top:55px;">
+    <div class="container">
+        <a href="@Url.Action("Index","Home")" class="nav-link">
+            <img src="~/Images/Logo.png" width="40" height="40" class="navbar-brand" />
+        </a>
+
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menubar" aria-controls="menubar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menubar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    @Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link" })
+                </li>
+
+                <li class="nav-item">
+                    @Html.ActionLink("Categories", "Index", "Categories", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Sub Category", "Index", "SubCategories", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Brand", "Index", "Brands", new { area = "" }, new { @class = "nav-link" })
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control mr-sm-2", placeholder = "Search Category" })
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container mt-2">
+    <a href="@Url.Action("Create","Categories")" class="btn alert-primary text-end mb-2">Add New</a>
+</div>
+<div class="card container">
+    <div class="card-header alert-info">
+        <h1 class="card-title text-center">Category List</h1>
+
+    </div>
+    <div class="card-body">
+        <div class="col-md-12">
+
+            <table class="table table-bordered table-hover">
+                <thead class="alert-success">
+                    <tr>
+                        <th>ID</th>
+                        <th>
+                            @Html.ActionLink("Category Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th>Description</th>
+                        <th width="150">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cat in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(x => cat.Id)</td>
+                            <td>@Html.DisplayFor(x => cat.CategoryName)</td>
+                            <td>@Html.DisplayFor(x => cat.CategoryDescription)</td>
+                            <td>
+                                <a href="@Url.Action("Edit","Categories",new { id=cat.Id})" class="btn alert-info btn-sm">Edit</a>
+                                <a href="@Url.Action("Delete","Categories",new { id=cat.Id})" class="btn alert-danger btn-sm">Delete</a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer alert-info" style="padding:5px">
+
+        <div class="d-flex justify-content-between container">
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        </div>
+
+    </div>
+</div>
+
+

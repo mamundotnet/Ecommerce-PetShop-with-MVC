@@ -1,0 +1,80 @@
+﻿@model PetShop.Models.ViewModels.RetriveProductView
+@{
+    ViewBag.Title = "ShowProduct";
+}
+
+<div class="container" style="margin-top:70px;">
+    <h1 class="text-center text-decoration-underline">Product Information</h1>
+    <div class="row">
+        <div class="col">
+            @using (Html.BeginForm("ViewProduct", "ViewProduct"))
+            {
+                @Html.HiddenFor(x => x.ProductsId)
+                <div class="col-md-8 offset-2 border-primary mb-3">
+
+                    <div class="card">
+                        <div class="row g-0">
+
+                            <div class="col-md-12">
+                                <div class="card-header text-white" style="background-color:#156c78">
+                                    <p class="card-text">
+                                        <h5 class="card-title text-capitalize text-center display-6">@Html.DisplayFor(x => x.BrandName)</h5>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <img src="@Url.Content(Model.Images)" width="350" height="400" alt="" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <b>Brand Name: </b>
+                                        @Html.DisplayFor(x => x.BrandName)
+                                    </p>
+                                    <p class="card-text"><b>Product Name: </b>@Html.DisplayFor(x => x.ProductsName)</p>
+                                    <p class="card-text"><b>Category: </b>@Html.DisplayFor(x => x.CategoryName)</p>
+                                    <p class="card-text"><b>Sub Category: </b>@Html.DisplayFor(x => x.SubCategoryName)</p>
+                                    <p class="card-text"><b>Per Unit: </b>@Html.DisplayFor(x => x.QuantityPerUnit)</p>
+                                    <p class="card-text"><b>Quantity: </b>@Html.DisplayFor(x => x.QuantityInStock)</p>
+                                    <p class="card-text"><b>Store Date: </b>@Html.DisplayFor(x => x.StoreDate)</p>
+                                    <p class="card-text"><b>Store Date: </b>TK-@Html.DisplayFor(x => x.UnitPrice)</p>
+                                    <p class="card-text"><b>Description: </b>TK-@Html.DisplayFor(x => x.Description)</p>
+                                    <p class="card-text">
+                                        <b>Status: </b>
+                                        @if (Model.QuantityInStock != 0)
+                                        {
+                                            <span class="badge bg-success text-white fw-bold">Available</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger text-white fw-bold">Not Available</span>
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="card-footer" style="background-color:#156c78">
+                                    <p class="card-text">
+                                        <a href="@Url.Action("Index","Home")" class="btn float-right" style="background-color:#8cc7c3">Back to Home</a>
+                                        <a href="@Url.Action("Index","ViewProduct")" class="btn btn-success text-white">Go To Shopping</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+
+    </div>
+</div>
+
+
+
+

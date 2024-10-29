@@ -1,0 +1,32 @@
+Migration Proccess:
+==============================
+Go to Web.cofig >>
+
+<connectionStrings>
+  <add name="DefaultConnection" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=PetShop_Db;Integrated Security=True" providerName="System.Data.SqlClient" />
+</connectionStrings>
+
+Then Open Pckage Maneger Console >>
+
+enable-migrations -ContextTypeName PetShop.Models.ApplicationDbContext -MigrationsDirectory Migrations.Identity
+>>
+enable-migrations -ContextTypeName PetShop.Models.ProductsDbContext -MigrationsDirectory Migrations.Petshop
+>>
+>>
+add-migration "A" -ConfigurationTypeName: PetShop.Migrations.Identity.Configuration
+>>
+add-migration "B" -ConfigurationTypeName: PetShop.Migrations.PetShop.Configuration
+>>
+(Now Make False All Category & SubCategory Cascade delete options)
+>>
+>>
+update-database -ConfigurationTypeName: PetShop.Migrations.Identity.Configuration 
+>>
+(Now go to SqlServerObjectExPlorer and copy your databaseName(*my newly created databasename was "PetShop.Models.InputModels.ProductsDbContext"))
+(And then Paste it into Web.config--Initial Catalog)
+>>
+>>
+update-database -ConfigurationTypeName: PetShop.Migrations.PetShop.Configuration
+
+(Successfull)
+

@@ -1,0 +1,220 @@
+﻿@model PetShop.Models.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<div class="container" style="margin-top:75px;">
+    <div class="row">
+        @if (ViewBag.msg != "")
+        {
+            <div class="text-danger" style="display:none">@ViewBag.msg</div>
+        }
+        else
+        {
+            <div class="text-danger">@ViewBag.msg</div>
+        }
+
+        <div class="col-md-12 mb-3">
+            <h3 class="text-capitalize offset-4">Add Product</h3>
+        </div>
+
+        <div class="col-md-12">
+            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "msg", OnComplete = "clearAll" }))
+            {
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.ProductsName, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.ProductsName, new { @class = "form-control r" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(x => x.ProductsName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.CategoryId, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-6">
+                        <select id="cat" class="form-select" name="@Html.NameFor(c=>c.CategoryId)">
+                            <option value="" selected="selected">-----Category-----</option>
+                            @foreach (var item in ViewBag.categoryList)
+                            {
+                                <option value="@item.Id">@item.CategoryName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(x => x.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.SubCategoryId, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-6">
+                        <select id="sCat" class="form-select" name="@Html.NameFor(c=>c.SubCategoryId)">
+                            <option value="" selected="selected">-----Sub Category-----</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(x => x.SubCategoryId, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.BrandId, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-6">
+                        <select id="fam" class="form-select" name="@Html.NameFor(c=>c.BrandId)">
+                            <option value="" selected="selected">-----Brands-----</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(x => x.BrandId, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.QuantityPerUnit, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.QuantityPerUnit, new { @class = "form-control r" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(x => x.QuantityPerUnit, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.UnitPrice, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.UnitPrice, new { @class = "form-control r" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(x => x.UnitPrice, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.Quantity, new { @class = "col-form-label col-md-2 r", type = "number" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control r" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(x => x.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    @Html.LabelFor(x => x.StockInStatus, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-6" style="margin-left:3px;">
+                        @Html.CheckBox("StockInStatus", false)
+                    </div>
+
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.Description, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-6">
+                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control r" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(x => x.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.StoreDate, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.StoreDate, new { @class = "form-control r", type = "date" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.ValidationMessageFor(x => x.StoreDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.Picture, new { @class = "col-form-label col-md-2 r" })
+                    <div class="col-md-10">
+                        <img src="~/Images/default_img.jpg" width="250" height="200" style="margin-bottom:10px;" id="uploadImg" />
+                    </div>
+                    <div class="offset-2 col-md-4">
+                        <input type="file" class="form-control" name="Picture" title="Upload Image" onchange="displayImage(this)" />
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-10 offset-2" id="msg">
+
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-10 offset-2">
+                        <button type="submit" class="btn btn-info">Save</button>
+                        <a href="@Url.Action("Index","Products")" class="btn btn-warning">Cancel</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script>
+    $(document).ready(function () {
+
+    });
+    function displayImage(result) {
+        if (result.files && result.files[0]) {
+            var fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                $("#uploadImg").attr('src', e.target.result);
+            }
+            fileReader.readAsDataURL(result.files[0]);
+        }
+    }
+</script>
+@section scripts{
+
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        $("#form0").attr("enctype", "multipart/form-data")
+        function clearAll() {
+            $("#form0").trigger("reset");
+        }
+
+        $(document).ready(function () {
+            $("#cat").change(function () {
+                var id = $("#cat option:selected").val();
+
+                $.ajax({
+                    url: '/Products/getSubCategories/' + id,
+                    cache: false,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function (data) {
+                        console.log(data);
+                        $("#sCat").empty();
+                        $.each(data, function (i, obj) {
+                            var s = '<option value="' + obj.Id + '">' + obj.SubCategoryName + '</option>';
+                            console.log(s);
+                            $("#sCat").append(s);
+                        })
+                    }
+                })
+            })
+            $("#sCat").change(function () {
+                var id = $("#sCat option:selected").val();
+
+                $.ajax({
+                    url: '/Products/getBrands/' + id,
+                    cache: false,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function (data) {
+                        console.log(data);
+                        $("#fam").empty();
+                        $.each(data, function (i, obj) {
+                            var a = '<option value="' + obj.Id + '">' + obj.BrandName + '</option>';
+                            console.log(a);
+                            $("#fam").append(a);
+                        })
+                    }
+                })
+            })
+        })
+    </script>
+
+}
+

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<PetShop.Models.ViewModels.OrderViewModel>
+@{
+    ViewBag.Title = "OrderDetails";
+}
+
+<div style="margin-top:80px;" class="container">
+
+    <div class="row">
+        <h1>Order Information</h1>
+        <div class="col">
+            <table class="table table-bordered table-striped">
+                <thead class="alert-info">
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Order Number</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var od in Model)
+                    {
+                        <tr>
+                            <td>@od.OrderId</td>
+                            <td>@od.OrderNumber</td>
+                            <td>@od.Quantity</td>
+                            <td>@od.UnitPrice</td>
+                            <td>@od.Total</td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+            <div>
+                <a href="@Url.Action("Index","Products")" class="btn btn-info">Back to Product</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+

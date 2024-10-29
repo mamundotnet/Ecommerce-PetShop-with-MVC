@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList<PetShop.Models.InputModels.SubCategory>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "SubCategory";
+}
+
+}
+<div class="container" style="margin-top:65px;">
+    <div class="row">
+        <div class="col">
+            @using (Html.BeginForm())
+            {<div class="row mb-2">
+                    <div class="col-md-11">
+                        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control r", placeholder = "Search by Sub Category Name..." })
+
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn alert-success">Search</button>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="card container">
+    <div class="card-header alert-success">
+        <h1 class="card-title text-center">Sub Category List</h1>
+
+    </div>
+    <div class="card-body">
+        <div class="col-md-12">
+
+            <table class="table table-bordered table-striped">
+                <thead class="alert-info">
+                    <tr>
+                        <th>ID</th>
+                        <th>
+                            @Html.ActionLink("Sub Category", "SubCategory", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th>Category</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sub in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(x => sub.Id)</td>
+                            <td>@Html.DisplayFor(x => sub.SubCategoryName)</td>
+                            <td>@Html.DisplayFor(x => sub.Category.CategoryName)</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer alert-success" style="padding:5px">
+
+        <div class="d-flex justify-content-between container">
+
+            @Html.PagedListPager(Model, page => Url.Action("SubCategory", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, searchStr = ViewBag.CategoryFilter }))
+
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        </div>
+
+    </div>
+</div>
+
